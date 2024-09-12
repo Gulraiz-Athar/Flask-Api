@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+    <script>
+        async function register() {
+            const username = document.getElementById('register-username').value;
+            const password = document.getElementById('register-password').value;
+
+            const response = await fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await response.json();
+            document.getElementById('register-message').innerText = data.message || data.error;
+        }
+    </script>
+</head>
+<body>
+    <h1>Register Page</h1>
+    <form onsubmit="event.preventDefault(); register();">
+        <label for="register-username">Username:</label>
+        <input type="text" id="register-username" name="username" required><br><br>
+        <label for="register-password">Password:</label>
+        <input type="password" id="register-password" name="password" required><br><br>
+        <input type="submit" value="Register">
+    </form>
+    <p id="register-message"></p>
+    <p>Already have an account? <a href="/">Login here</a></p>
+</body>
+</html>
